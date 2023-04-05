@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link  rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main_container">
+        <div class="music_container">
+     
+        <h3 id="title">Raatan Lambiyan </h3>
+            <h4 id="artist">Jubin Nautiyal, Asees Kaur</h4>
+        
+        <div class="image_container">
+            <img src="images/Second.jpg">
+        </div>
+        <audio src="music/First.mp3"></audio>
+        <div class="music_control">
+            <i class="fa-solid fa-backward"id="prev" title="Prev"></i>
+            <i class="fa-solid fa-play main_button" id="play" title="Play" class="main_button"></i>
+            <i class="fa-solid fa-forward" id="next" title="Next"></i>
+        </div>
+    </div>
+</div>
+<script >
+    const music =document.querySelector("audio");
+    const img =document.querySelector("img");
+    const play =document.getElementById("play");
+    const artist =document.getElementById("artist");
+    const title =document.getElementById("title");
+    const prev =document.getElementById("prev");
+    const next =document.getElementById("next");
+    
+    const songs =[{
+        name:"First",
+        artist:"Jubin Nautiyal, Asees Kaur,",
+        title:"Raatan Lambiyan",
+         
+    },{
+        name:"Second",
+        artist:"King",
+        title:"Maan Meri Jaan",
+    },{
+        name:"Third",
+        artist:"Arijit Singh, Sukriti Kakar",
+        title:"Jhoome Jo",
+        
+    },
+
+    ];
+
+
+
+    let isplaying =false;
+     
+  const playmusic = () =>{
+    isplaying=false;
+    music.play();
+    play.classList.replace("fa-play","fa-pause");
+    img.classList.add("anime");
+
+  };
+
+  const pausemusic = () =>{
+    isplaying=true;
+    music.pause();
+    play.classList.replace("fa-pause","fa-play");
+    img.classList.remove("anime");
+    
+
+  };
+
+  play.addEventListener("click" , () =>{
+    if( isplaying){
+        playmusic();
+    }else{
+        pausemusic();
+    }
+  });
+  
+  const loadsongs =(songs) => {
+    title.textContent=songs.title;
+    artist.textContent=songs.artist;
+    music.src="music/"+songs.name +".mp3";
+    img.src="images/"+songs.name +".jpg";
+
+  }
+songIndex =0;
+const nextsong =() => {
+    songIndex =(songIndex +1 )% songs.length;
+    loadsongs(songs[songIndex]);
+    playmusic();
+};
+const prevsong =() => {
+    songIndex =(songIndex -1 + songs.length)% songs.length ;
+    loadsongs(songs[songIndex]);
+    playmusic();
+};
+next.addEventListener("click",nextsong);
+prev.addEventListener("click",prevsong);
+
+
+</script>
+</body>
+</html>
